@@ -1,0 +1,28 @@
+{
+  "name": "de-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/server.js",
+    "server": "nodemon ./server/server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run App\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soumyapal96/de-storage.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soumyapal96/de-storage/issues"
+  },
+  "homepage": "https://github.com/soumyapal96/de-storage#readme",
+  "dependencies": {
+    "concurrently": "^6.2.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}
