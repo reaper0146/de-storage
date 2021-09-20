@@ -1,12 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import Axios from 'axios'
 import { Users, BrowserStorage } from '@spacehq/sdk';
 // eslint-disable-next-line
 import { UserStorage, AddItemsResultSummary } from '@spacehq/sdk';
 
 var tempUser
 var tempStorage
+const [usernameReg, setUsernameReg] = useState('')
+const [passwordReg, setPasswordReg] = useState('')
 
+const reguster = () => {
+  Axios.post('http://localhost:3000/register', {
+    username:usernameReg, password:passwordReg}).then((response) => {console.log(response);});
+};
 async function userCreate() {
   console.log('hi')
   const users = await Users.withStorage(
@@ -87,10 +94,14 @@ function App() {
         <div class="Registration">
           <h1>Registration</h1>
           <label>Username</label>
-          <input type='text' />
+          <input type='text' onChange={(e) => {
+            setUsernameReg(e.target.value);
+          }}/>
           <label>Password</label>
-          <input type='text' />
-          <button>Register</button>
+          <input type='text' onChange={(e) => {
+            setPasswordReg(e.target.value);
+          }}/>
+          <button onClick = {register}>Register</button>
         </div>
 
         <div class="Regislogintration">
