@@ -84,7 +84,21 @@ function App() {
         >
           Learn React
         </a>
-      
+        <div class="Registration">
+          <h1>Registration</h1>
+          <label>Username</label>
+          <input type='text' />
+          <label>Password</label>
+          <input type='text' />
+          <button>Register</button>
+        </div>
+
+        <div class="Regislogintration">
+          <h1>Login</h1>
+          <input type='text' placeholder='Username' />
+          <input type='password' placeholder='password' />
+          <button>Register</button>
+        </div>
         <button className="createToken" onClick = {userCreate}> Create User</button>
         <button className="createToken" onClick = {createStorage}> Create Storage</button>
         <button className="createToken" onClick = {fileShare}> Share File</button>
