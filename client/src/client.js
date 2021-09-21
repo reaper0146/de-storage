@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import react, { useEffect, useState } from 'react'
 import './App.css';
 import Axios from 'axios'
 import { Users, BrowserStorage } from '@spacehq/sdk';
@@ -7,13 +8,9 @@ import { UserStorage, AddItemsResultSummary } from '@spacehq/sdk';
 
 var tempUser
 var tempStorage
-const [usernameReg, setUsernameReg] = useState('')
-const [passwordReg, setPasswordReg] = useState('')
 
-const reguster = () => {
-  Axios.post('http://localhost:3000/register', {
-    username:usernameReg, password:passwordReg}).then((response) => {console.log(response);});
-};
+
+
 async function userCreate() {
   console.log('hi')
   const users = await Users.withStorage(
@@ -76,22 +73,16 @@ await storage.shareViaPublicKey({
 
 
 function App() {
+  const [usernameReg, setUsernameReg] = useState('')
+  const [passwordReg, setPasswordReg] = useState('')
+  const register = () => {
+    Axios.post('http://localhost:5000/register', {
+      username:usernameReg, password:passwordReg}).then((response) => {console.log(response);});
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div class="Registration">
+        <div className="Registration">
           <h1>Registration</h1>
           <label>Username</label>
           <input type='text' onChange={(e) => {
@@ -104,7 +95,7 @@ function App() {
           <button onClick = {register}>Register</button>
         </div>
 
-        <div class="Regislogintration">
+        <div className="Regislogintration">
           <h1>Login</h1>
           <input type='text' placeholder='Username' />
           <input type='password' placeholder='password' />
@@ -113,7 +104,6 @@ function App() {
         <button className="createToken" onClick = {userCreate}> Create User</button>
         <button className="createToken" onClick = {createStorage}> Create Storage</button>
         <button className="createToken" onClick = {fileShare}> Share File</button>
-      </header>
     </div>
   );
 }

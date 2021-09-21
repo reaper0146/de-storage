@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/soumyapal96/de-storage#readme",
   "dependencies": {
+    "axios": "^0.21.4",
     "concurrently": "^6.2.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.12"
   }

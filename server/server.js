@@ -4,6 +4,7 @@ const cors=require('cors');
 
 const app=express();
 app.use(express.json())
+app.use(cors())
 
 const db = mysql.createConnection({
     user:"root",
@@ -13,8 +14,8 @@ const db = mysql.createConnection({
 })
 
 app.post('/register', (req,res)=> {
-    const username = reg.body.username
-    const password = reg.body.password
+    const username = req.body.username
+    const password = req.body.password
     console.log(username)
     console.log(password)
 
