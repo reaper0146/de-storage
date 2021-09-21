@@ -9,7 +9,7 @@ import {GetAddressFromPublicKey} from '@spacehq/sdk'
 import _ from 'lodash'
 import {Fragment} from "react";
 import IdentiCat from "./IdentiCat";
-import words from 'random-words';
+//import words from 'random-words';
 
 var tempUser
 var tempStorage
