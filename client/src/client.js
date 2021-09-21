@@ -78,7 +78,34 @@ await storage.shareViaPublicKey({
 
 //new
 
-const bucketName = "com.endowl.space-case"
+  
+
+function App() {
+  const [usernameReg, setUsernameReg] = useState('')
+  const [passwordReg, setPasswordReg] = useState('')
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const[loginStatus, setLoginStatus]= useState("")
+
+  const register = () => {
+    Axios.post('http://localhost:5000/register', {
+      username:usernameReg, password:passwordReg}).then((response) => {console.log(response.data);});
+  };
+
+  const login = () => {
+    Axios.post('http://localhost:5000/login', {
+      username:username, password:password}).then((response) => {
+        if(response.data.message) {
+          setLoginStatus(response.data.message);
+        } else {
+          setLoginStatus(response.data[0].username);
+        }
+      });
+  };
+
+  const bucketName = "com.endowl.space-case"
   const contactsPath = "com.endowl.space-case.contacts"
   // TODO: Determine if it makes sense to only keep track of identities OR spaceUsers and derive the other from that?
   const [browserStorage, setBrowserStorage] = useState({})
@@ -572,31 +599,6 @@ const bucketName = "com.endowl.space-case"
   useEffect(() => {
     initializeUsers()
   }, [])
-
-function App() {
-  const [usernameReg, setUsernameReg] = useState('')
-  const [passwordReg, setPasswordReg] = useState('')
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const[loginStatus, setLoginStatus]= useState("")
-
-  const register = () => {
-    Axios.post('http://localhost:5000/register', {
-      username:usernameReg, password:passwordReg}).then((response) => {console.log(response.data);});
-  };
-
-  const login = () => {
-    Axios.post('http://localhost:5000/login', {
-      username:username, password:password}).then((response) => {
-        if(response.data.message) {
-          setLoginStatus(response.data.message);
-        } else {
-          setLoginStatus(response.data[0].username);
-        }
-      });
-  };
 
   return (
     <div className="App">
