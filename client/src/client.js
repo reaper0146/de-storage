@@ -403,7 +403,7 @@ function App() {
   }
 
   const handleNewDirectory = async () => {
-    const dirName = words({exactly: 2, join: '-'})
+    const dirName = temp
     console.log("dirName: ", dirName)
     createFolder(dirName)
   }
