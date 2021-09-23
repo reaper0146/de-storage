@@ -34,6 +34,11 @@ const user = await users.authenticate(identity);
 console.log(identity)
 console.log(users)
 tempUser = user
+const storage = new UserStorage(tempUser)
+await storage.createFolder({ bucket: 'personal', path: 'topFolder' });
+console.log(storage)
+const result = await storage.listDirectory({ bucket: 'personal', path: '' });
+console.log(result)
 }
 
 async function createStorage() {
@@ -231,9 +236,6 @@ function App() {
     console.log("userSpaceStorage: ", userSpaceStorage)
     setSpaceStorage(userSpaceStorage)
 
-    // TODO: Evaluate if this is being done right and is in the most optimal location
-    // Listen for spaceStorage events (like shared files...)
-    // await userSpaceStorage.initListener();
     const response = await userSpaceStorage.notificationSubscribe();
 
     response.on('data', (data) => {
@@ -244,12 +246,7 @@ function App() {
       // setfileInvitations(fileInvitationsCopy)
 
       setfileInvitations(relatedObject)
-      // TODO: Save an array of invitations, not just the most recent
     })
-
-
-    // NOTE: how does GetAddressFromPublicKey work? no good docs, throws an "Unsupported encoding" error.
-    // console.log("getAddressFromPublicKey", GetAddressFromPublicKey(user.identity.pubKey.toString()))
   }
 
   const handleSelectFile = async (file) => {
@@ -398,7 +395,7 @@ function App() {
   }
 
   const handleNewDirectory = async () => {
-    const dirName = temp
+    const dirName = "temp"
     console.log("dirName: ", dirName)
     createFolder(dirName)
   }
@@ -411,7 +408,10 @@ function App() {
     await reloadRootDirectory()
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   const handleShareFile = async () => {
     console.log("Request to share file")
     if(_.isEmpty(currentFile)) {
@@ -441,7 +441,28 @@ function App() {
         path: currentFile,
       }]
     })
+<<<<<<< HEAD
     console.log("shareResult:", shareResult) 
+=======
+
+    console.log("shareResult:", shareResult)
+    // console.log("shareResult.publicKeys[0].pk hex", hexFromPubKey(shareResult.publicKeys[0].pk))
+    // console.log("shareResult.publicKeys[0].tempKey hex", hexFromPubKey(shareResult.publicKeys[0].pk))
+
+    // you can share privately with existing users via their public key:
+    /*
+    await spaceStorage.shareViaPublicKey({
+      publicKeys: [{
+        id: 'user@email.com', // or any identifier for the user
+        pk: 'user-pk-hex-or-multibase', // optional, omit if user doesn't exist yet, it would generate temp access key
+      }],
+      paths: [{
+        bucket: 'personal',
+        path: '/file/path/here'
+      }],
+    });
+     */
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   }
 
   const handleFileUpload = async (event) => {
@@ -475,9 +496,34 @@ function App() {
     uploadResponse.once('done', (data) => {
       // returns a summary of all files and their upload status
       console.log("uploadResponse summary: ", data)
-      // TODO: break this out a little more semantically, the intent being to refresh the file list
       handleSelectPath(currentPath)
     })
+<<<<<<< HEAD
+=======
+
+    /*
+    console.log("Uploading file to Textile");
+    const path = "test_path";
+    const result = await storage.insertFile(buckets, bucketKey, selectedFile, path);
+    console.log("Done uploading file to Textile")
+    console.log("result", result);
+
+    console.log("Reading test file from Textile Bucket");
+
+    try {
+      const data = buckets.pullPath(bucketKey, path)
+      const { value } = await data.next();
+      console.log("data value", value)
+      let str = "";
+      for (let i = 0; i < value.length; i++) {
+        str += String.fromCharCode(parseInt(value[i]));
+      }
+      console.log("str", str);
+    } catch (error) {
+      console.log("Error while loading file from bucket", error)
+    }
+    */
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   }
 
   const handleAddContact = () => {
@@ -566,11 +612,10 @@ function App() {
           <button onClick = {login}>Login</button><br/>
         </div>
         <button className="createToken" onClick = {userCreate}> Create User</button><br/>
-        <button className="createToken" onClick = {createStorage}> Create Storage</button><br/>
         <button className="createToken" onClick = {fileShare}> Share File</button><br/>
         <h1>{loginStatus}</h1>
         
-        <h2>Space Case</h2>
+        <h2>Space Store</h2>
         {_.isEmpty(identities) && (
             <>
               <p>Checking for saved identities</p>
