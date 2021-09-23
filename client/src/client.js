@@ -171,11 +171,6 @@ function App() {
       console.log("ERROR: Identity failed to auth using Space SDK: ", err.toString())
     }
 
-    // users are automatically restored from stored identities
-    // TODO: Figure out why the correct end point seems to keep changing over time, or is it just inconsistent docs?.....
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "users.space.storage"}, onErrorCallback)
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://users.space.storage"}, onErrorCallback)
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://auth-dev.space.storage"}, onErrorCallback)
     const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://auth.space.storage"}, onErrorCallback)
     console.log("Initialized users object using browser storage")
     console.log("users: ", users)
@@ -416,15 +411,6 @@ function App() {
     await reloadRootDirectory()
   }
 
-  /*
-  const handleFileChange = async (event) => {
-    console.log("Input file changed");
-    // console.log("event", event);
-    const file = event.target.files[0];
-    console.log("event.target.files[0]", file);
-    setInputFile(file);
-  }
-  */
 
   const handleShareFile = async () => {
     console.log("Request to share file")
@@ -455,26 +441,7 @@ function App() {
         path: currentFile,
       }]
     })
-
-    console.log("shareResult:", shareResult)
-    // console.log("shareResult.publicKeys[0].pk hex", hexFromPubKey(shareResult.publicKeys[0].pk))
-    // console.log("shareResult.publicKeys[0].tempKey hex", hexFromPubKey(shareResult.publicKeys[0].pk))
-
-    // TODO: Figure out how to get shared file to show up for recipient!!!!
-
-    // you can share privately with existing users via their public key:
-    /*
-    await spaceStorage.shareViaPublicKey({
-      publicKeys: [{
-        id: 'user@email.com', // or any identifier for the user
-        pk: 'user-pk-hex-or-multibase', // optional, omit if user doesn't exist yet, it would generate temp access key
-      }],
-      paths: [{
-        bucket: 'personal',
-        path: '/file/path/here'
-      }],
-    });
-     */
+    console.log("shareResult:", shareResult) 
   }
 
   const handleFileUpload = async (event) => {
@@ -511,30 +478,6 @@ function App() {
       // TODO: break this out a little more semantically, the intent being to refresh the file list
       handleSelectPath(currentPath)
     })
-
-    /*
-    console.log("Uploading file to Textile");
-    const path = "test_path";
-    const result = await storage.insertFile(buckets, bucketKey, selectedFile, path);
-    console.log("Done uploading file to Textile")
-    console.log("result", result);
-    // TODO: Move this
-    // Read back test file from the Bucket
-    console.log("Reading test file from Textile Bucket");
-    // TODO: Create link to download/view the retrieved file
-    try {
-      const data = buckets.pullPath(bucketKey, path)
-      const { value } = await data.next();
-      console.log("data value", value)
-      let str = "";
-      for (let i = 0; i < value.length; i++) {
-        str += String.fromCharCode(parseInt(value[i]));
-      }
-      console.log("str", str);
-    } catch (error) {
-      console.log("Error while loading file from bucket", error)
-    }
-    */
   }
 
   const handleAddContact = () => {
@@ -575,10 +518,6 @@ function App() {
       setSelectedContacts(selectedContactsCopy)
     }
   }
-
-
-  // TODO: Load contacts file from Fleek
-
 
 
   useEffect(() => {
@@ -689,11 +628,11 @@ function App() {
 
                       <h3>My Files:</h3>
                       <button onClick={handleNewDirectory}>
-                        + Mkdir
+                        + New Directory
                       </button>
                       <label className="file-upload">
                         <input type="file" onChange={handleFileUpload} />
-                        ^ Upload
+                        ^ File Upload
                       </label>
                       {/*<button onClick={handleFileUpload}>^ Upload</button>*/}
                       <button onClick={handleOpenFile} disabled={_.isEmpty(currentFile)}>
