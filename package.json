@@ -25,6 +25,7 @@
     "concurrently": "^6.2.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "lightstreams-js-sdk": "git+https://github.com/lightstreams-network/lightstreams-js-sdk.git#master",
     "nodemon": "^2.0.12"
   }
 }
