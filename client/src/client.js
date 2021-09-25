@@ -17,7 +17,7 @@ var tempStorage
 
 
 
-async function userCreate1() {
+async function userCreate() {
   console.log('hi')
   const users = await Users.withStorage(
     new BrowserStorage(), 
@@ -105,6 +105,9 @@ function App() {
   const[loginStatus, setLoginStatus]= useState("")
 
   const register = () => {
+    Axios.post('http://localhost:5000/light'); };
+
+  const lightStream = () => {
     Axios.post('http://localhost:5000/register', {
       username:usernameReg, password:passwordReg}).then((response) => {console.log(response.data);});
   };
@@ -614,6 +617,7 @@ function App() {
         </div>
         <button className="createToken" onClick = {userCreate}> Create User</button><br/>
         <button className="createToken" onClick = {fileShare}> Share File</button><br/>
+        <button className="createToken" onClick = {lightStream}> LightStream</button><br/>
         <h1>{loginStatus}</h1>
         
         <h2>Space Store</h2>
