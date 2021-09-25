@@ -1,10 +1,43 @@
 const express=require('express');
 const mysql = require('mysql');
 const cors=require('cors');
+const { Leth, Web3, Gateway} = require('lightstreams-js-sdk')
 
 const app=express();
 app.use(express.json())
 app.use(cors())
+
+// Instanciate web3 engine using my local lightstreams network provider and remote keys
+const web3 = Web3.newEngine('http://localhost:8545');
+const gateway = Gateway('https://gateway.sirius.lightstreams.io');
+
+// Create accounts to be used in the example
+// `accountPublisher` will require some tokens to performe the actions
+const accountPublisher = await web3.eth.personal.newAccount("password");
+const accountReader = await web3.eth.personal.newAccount("password");
+
+// Deploy an ACL contract
+const txReceipt = Leth.acl.create(web3, { from: accountPublisher, owner: accountPublisher, isPublic: false });
+
+const aclAddr = txReceipt.contractAddress;
+
+// Publish new content using deployed acl
+const file = fs.createReadStream(`/tmp/my_secret_file.txt`);
+const { meta } = await gateway.storage.addWithAcl(account, aclAddr, file);
+
+// Grant reader read access
+await Leth.acl.grantRead = async (web3, { from: accountPublisher, contractAddr: aclAddr, account: accountReader })
+
+//remote
+async function userCreateR() {
+    const { Gateway }  = require('lightstreams-js-sdk')
+    const gateway = Gateway('https://gateway.sirius.lightstreams.io')
+  
+    const account = "0xa981f8ca77d069d79b609ca0069b052db79e7e30"
+    const file = fs.createReadStream(`/tmp/my_secret_file.txt`)
+    const { meta, acl } = await gateway.storage.add(account, "password", file)
+  
+  }
 
 const db = mysql.createConnection({
     user:"root",
