@@ -32,9 +32,10 @@ const identity = await users.createIdentity();
 const user = await users.authenticate(identity);
 
 console.log(identity)
-console.log(users)
+console.log(user)
+console.log(user.storageAuth.token)
 tempUser = user
-const storage = new UserStorage(tempUser)
+const storage = new UserStorage(user)
 await storage.createFolder({ bucket: 'personal', path: 'topFolder' });
 console.log(storage)
 const result = await storage.listDirectory({ bucket: 'personal', path: '' });
@@ -177,10 +178,6 @@ function App() {
     }
 
     // users are automatically restored from stored identities
-    // TODO: Figure out why the correct end point seems to keep changing over time, or is it just inconsistent docs?.....
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "users.space.storage"}, onErrorCallback)
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://users.space.storage"}, onErrorCallback)
-    // const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://auth-dev.space.storage"}, onErrorCallback)
     const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://auth.space.storage"}, onErrorCallback)
     console.log("Initialized users object using browser storage")
     console.log("users: ", users)
@@ -227,7 +224,7 @@ function App() {
     console.log("Initializing new users mailbox")
     const userSpaceStorage = new UserStorage(newUser)
     const mailboxResult = await userSpaceStorage.initMailbox()
-    console.log("mailboxResult: ", mailboxResult)
+    console.log("M ailboxResult: ", mailboxResult)
   }
 
   const handleSelectIdentity = async (index) => {
@@ -265,8 +262,7 @@ function App() {
     const file = currentFile
     console.log("file: ", file)
 
-    // TODO: Get this working! Currently getting error from UserStorage "File not found"
-    return // TODO: Delete this, just here to prevent failure
+    return
 
     let fileResponse
     let fileContent
@@ -281,7 +277,6 @@ function App() {
     console.log("fileContent: ", fileContent)
 
     // Save file locally
-    // TODO: Fix this - it doesn't seem to be encoding the binary data properly
     const blob = new Blob(fileContent);
     const link = document.createElement('a');
     // Browsers that support HTML5 download attribute
@@ -316,7 +311,6 @@ function App() {
     const fileBytes = await response.consumeStream();
 
     // Save file locally
-    // TODO: Fix this - it doesn't seem to be encoding the binary data properly
     const blob = new Blob(fileBytes);
     const link = document.createElement('a');
     // Browsers that support HTML5 download attribute
