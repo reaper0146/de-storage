@@ -32,9 +32,15 @@ const identity = await users.createIdentity();
 const user = await users.authenticate(identity);
 
 console.log(identity)
-console.log(users)
+console.log(user)
+console.log(user.storageAuth.token)
 tempUser = user
-const storage = new UserStorage(tempUser)
+const storage = new UserStorage(user)
+console.log("temp")
+console.log(storage)
+const mailboxResult = await storage.initMailbox()
+console.log('temp2')
+console.log("MailboxResult: ", mailboxResult)
 await storage.createFolder({ bucket: 'personal', path: 'topFolder' });
 console.log(storage)
 const result = await storage.listDirectory({ bucket: 'personal', path: '' });
@@ -43,6 +49,8 @@ console.log(result)
 
 async function createStorage() {
 const storage = new UserStorage(tempUser);
+const mailboxResult = await storage.initMailbox()
+console.log("MailboxResult: ", mailboxResult)
 await storage.createFolder({ bucket: 'personal', path: 'topFolder' });
 console.log(storage)
 const result = await storage.listDirectory({ bucket: 'personal', path: '' });
@@ -222,7 +230,7 @@ function App() {
     console.log("Initializing new users mailbox")
     const userSpaceStorage = new UserStorage(newUser)
     const mailboxResult = await userSpaceStorage.initMailbox()
-    console.log("mailboxResult: ", mailboxResult)
+    console.log("MailboxResult: ", mailboxResult)
   }
 
   const handleSelectIdentity = async (index) => {
@@ -260,8 +268,7 @@ function App() {
     const file = currentFile
     console.log("file: ", file)
 
-    // TODO: Get this working! Currently getting error from UserStorage "File not found"
-    return // TODO: Delete this, just here to prevent failure
+    return
 
     let fileResponse
     let fileContent
@@ -276,7 +283,6 @@ function App() {
     console.log("fileContent: ", fileContent)
 
     // Save file locally
-    // TODO: Fix this - it doesn't seem to be encoding the binary data properly
     const blob = new Blob(fileContent);
     const link = document.createElement('a');
     // Browsers that support HTML5 download attribute
@@ -311,7 +317,6 @@ function App() {
     const fileBytes = await response.consumeStream();
 
     // Save file locally
-    // TODO: Fix this - it doesn't seem to be encoding the binary data properly
     const blob = new Blob(fileBytes);
     const link = document.createElement('a');
     // Browsers that support HTML5 download attribute
@@ -408,10 +413,6 @@ function App() {
     await reloadRootDirectory()
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   const handleShareFile = async () => {
     console.log("Request to share file")
     if(_.isEmpty(currentFile)) {
@@ -441,9 +442,8 @@ function App() {
         path: currentFile,
       }]
     })
-<<<<<<< HEAD
+
     console.log("shareResult:", shareResult) 
-=======
 
     console.log("shareResult:", shareResult)
     // console.log("shareResult.publicKeys[0].pk hex", hexFromPubKey(shareResult.publicKeys[0].pk))
@@ -462,7 +462,7 @@ function App() {
       }],
     });
      */
->>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
+
   }
 
   const handleFileUpload = async (event) => {
@@ -498,8 +498,7 @@ function App() {
       console.log("uploadResponse summary: ", data)
       handleSelectPath(currentPath)
     })
-<<<<<<< HEAD
-=======
+
 
     /*
     console.log("Uploading file to Textile");
@@ -523,7 +522,7 @@ function App() {
       console.log("Error while loading file from bucket", error)
     }
     */
->>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
+
   }
 
   const handleAddContact = () => {
