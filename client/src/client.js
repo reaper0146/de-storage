@@ -20,7 +20,8 @@ async function userCreate() {
   console.log('hi')
   const users = await Users.withStorage(
     new BrowserStorage(), 
-    { endpoint: 'wss://auth-dev.space.storage' }
+    { endpoint: 'wss://auth.space.storage' 
+  }//'wss://auth-dev.space.storage' }
     
 );
 console.log(typeof(users.users))
