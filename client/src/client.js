@@ -177,7 +177,10 @@ function App() {
       console.log("ERROR: Identity failed to auth using Space SDK: ", err.toString())
     }
 
+<<<<<<< HEAD
     // users are automatically restored from stored identities
+=======
+>>>>>>> 4d18152dd660a0260a6e6e3908331669d337bde4
     const users = await Users.withStorage(browserUserStorage, {endpoint: "wss://auth.space.storage"}, onErrorCallback)
     console.log("Initialized users object using browser storage")
     console.log("users: ", users)
@@ -407,6 +410,10 @@ function App() {
     await reloadRootDirectory()
   }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   const handleShareFile = async () => {
     console.log("Request to share file")
     if(_.isEmpty(currentFile)) {
@@ -436,6 +443,9 @@ function App() {
         path: currentFile,
       }]
     })
+<<<<<<< HEAD
+    console.log("shareResult:", shareResult) 
+=======
 
     console.log("shareResult:", shareResult)
     // console.log("shareResult.publicKeys[0].pk hex", hexFromPubKey(shareResult.publicKeys[0].pk))
@@ -454,6 +464,7 @@ function App() {
       }],
     });
      */
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   }
 
   const handleFileUpload = async (event) => {
@@ -489,6 +500,8 @@ function App() {
       console.log("uploadResponse summary: ", data)
       handleSelectPath(currentPath)
     })
+<<<<<<< HEAD
+=======
 
     /*
     console.log("Uploading file to Textile");
@@ -512,6 +525,7 @@ function App() {
       console.log("Error while loading file from bucket", error)
     }
     */
+>>>>>>> 98c89ae524fc1ebb02e74789a9e44c439773f041
   }
 
   const handleAddContact = () => {
@@ -552,10 +566,6 @@ function App() {
       setSelectedContacts(selectedContactsCopy)
     }
   }
-
-
-  // TODO: Load contacts file from Fleek
-
 
 
   useEffect(() => {
@@ -665,11 +675,11 @@ function App() {
 
                       <h3>My Files:</h3>
                       <button onClick={handleNewDirectory}>
-                        + Mkdir
+                        + New Directory
                       </button>
                       <label className="file-upload">
                         <input type="file" onChange={handleFileUpload} />
-                        ^ Upload
+                        ^ File Upload
                       </label>
                       {/*<button onClick={handleFileUpload}>^ Upload</button>*/}
                       <button onClick={handleOpenFile} disabled={_.isEmpty(currentFile)}>
