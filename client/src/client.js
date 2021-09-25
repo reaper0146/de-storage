@@ -104,10 +104,10 @@ function App() {
 
   const[loginStatus, setLoginStatus]= useState("")
 
-  const register = () => {
+  const lightStream = () => {
     Axios.post('http://localhost:5000/light'); };
 
-  const lightStream = () => {
+  const register = () => {
     Axios.post('http://localhost:5000/register', {
       username:usernameReg, password:passwordReg}).then((response) => {console.log(response.data);});
   };
