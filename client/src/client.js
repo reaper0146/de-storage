@@ -6,12 +6,15 @@ import { Users, BrowserStorage } from '@spacehq/sdk';
 // eslint-disable-next-line
 import { UserStorage, AddItemsResultSummary } from '@spacehq/sdk';
 import {GetAddressFromPublicKey} from '@spacehq/sdk'
+import { SpaceClient } from '@fleekhq/space-client';
 //import words from 'random-words';
 
 var tempUser
 var tempStorage
 
-
+const client = new SpaceClient({
+  url: `http://0.0.0.0:9998`,
+});
 
 
 async function userCreate() {
