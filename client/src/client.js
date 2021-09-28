@@ -24,11 +24,11 @@ async function userCreate() {
 );
 console.log(typeof(users.users))
 // createIdentity generate a random keypair identity
-const identity = await users.createIdentity();
+//const identity = await users.createIdentity();
 
 // the new keypair can be used to authenticate a new user
 // `users.authenticate()` generates hub API session tokens for the keypair identity.
-const user = await users.authenticate(identity);
+//const user = await users.authenticate(identity);
 
 console.log(identity)
 console.log(user)

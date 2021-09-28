@@ -22,27 +22,27 @@ async function userCreateR() {
   
   }
 
-app.post('/light', (req,res)=> {
+//app.post('/light', (req,res)=> {
 
 // Create accounts to be used in the example
 // `accountPublisher` will require some tokens to performe the actions
-const accountPublisher = await web3.eth.personal.newAccount("password1");
-const accountReader = await web3.eth.personal.newAccount("password2");
+//const accountPublisher = await web3.eth.personal.newAccount("password1");
+//const accountReader = await web3.eth.personal.newAccount("password2");
 
-console.log(accountPublisher)
-console.log(accountReader)
+//console.log(accountPublisher)
+//console.log(accountReader)
 // Deploy an ACL contract
-const txReceipt = Leth.acl.create(web3, { from: accountPublisher, owner: accountPublisher, isPublic: false });
+//const txReceipt = Leth.acl.create(web3, { from: accountPublisher, owner: accountPublisher, isPublic: false });
 
-const aclAddr = txReceipt.contractAddress;
+//const aclAddr = txReceipt.contractAddress;
 
 // Publish new content using deployed acl
-const file = fs.createReadStream(`/tmp/my_secret_file.txt`);
-const { meta } = await gateway.storage.addWithAcl(account, aclAddr, file);
+//const file = fs.createReadStream(`/tmp/my_secret_file.txt`);
+//const { meta } = await gateway.storage.addWithAcl(account, aclAddr, file);
 
 // Grant reader read access
 //await Leth.acl.grantRead = async (web3, { from: accountPublisher, contractAddr: aclAddr, account: accountReader })
-})
+//})
 
 
 const db = mysql.createConnection({
